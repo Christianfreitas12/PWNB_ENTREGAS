@@ -1,0 +1,88 @@
+body{margin: 0px;}
+
+
+header {
+    display: flex;
+    justify-content: space-between; /* Espaçamento entre elementos */
+    align-items: center; /* Centralizar verticalmente */
+
+
+
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+}
+
+h1 {
+    margin: 0;
+    padding: 10px;
+}
+
+.menu {
+    background-color: #444;
+    color: #fff;
+    position: fixed;
+    top: 0;
+    right: -250px;
+    transition: left 0.3s ease-in-out;
+}
+
+.menu.show {
+    right: 0;
+    width: 15%;
+    height: 100%;
+    margin: 5em 0px;
+}
+
+.menu ul {
+    list-style-type: none;
+    align-items: center;
+    padding: 0;
+}
+
+.menu ul li {
+    padding: 10px;
+}
+
+.menu ul li a {
+    text-decoration: none;
+    color: #fff;
+}
+
+#menu-toggle {
+    color: #fff;
+    padding: 10px 20px; 
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  
+    top: 10px;
+    right: 10px;
+    z-index: 2; 
+    transition: background-color 0.3s ease-in-out;
+}
+
+#menu-toggle:hover {
+    background-color: #555;
+}
+
+#calendario{
+    width: 40%;
+    height: 60vh;
+}
+
+.conteiner {
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center; 
+}
+
+.fc .fc-button-primary:disabled {
+    display: none;
+}
+
+.fc .fc-scroller-liquid-absolute {
+   overflow: none;
+}
