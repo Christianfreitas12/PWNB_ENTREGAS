@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Cadastro</title>
+</head>
+
+<body>
+    <h1>Cadastro de Clientes</h1>
+    <form id="clienteForm">
+        <label for="nome">Nome</label>
+        <input type="text" name="nome" id="nome" required>
+
+        <label for="sobrenome">Sobrenome</label>
+        <input type="text" name="sobrenome" id="sobrenome" required>
+
+        <label for="nascimento">Data de Nascimento</label>
+        <input type="date" name="nascimento" id="nascimento" required>
+
+        <label for="cidade">Cidade</label>
+        <input type="text" name="cidade" id="cidade" readonly>
+
+        <label for="cep">CEP</label>
+        <input type="text" name="cep" id="cep" required onkeydown="if (event.key === 'Enter') buscarEndereco();">
+
+        <label for="uf">UF</label>
+        <input type="text" name="uf" id="uf" readonly>
+
+        <label for="endereco">Endereço</label>
+        <input type="text" name="endereco" id="endereco" readonly>
+
+        <label for="numero">Número</label>
+        <input type="text" name="numero" id="numero" required>
+
+        <label for="tipoCliente">Tipo de Cliente:</label>
+        <select id="tipoCliente" name="tipoCliente">
+            <option></option>
+            <option value="bronze">Bronze</option>
+            <option value="ouro">Ouro</option>
+            <option value="platina">Platina</option>
+            <option value="diamante">Diamante</option>
+        </select>
+        <br><br>
+       
+        <div class="botoes">
+            <button class="Salvar" type="button" onclick="incluirCliente()">Incluir</button>
+            <button class="" type="button" > <a href="tabela.html">Listas Clientes</a> </button>
+        </div>
+    </form>
+<script src="script.js"></script>
+</body>
+
+</html>
