@@ -57,10 +57,9 @@ function incluirCliente() {
     clientes.push(cliente);
     localStorage.setItem("IncluirClientes", JSON.stringify(clientes));
 
-
-    atualizarTabelaClientes();
+    //atualizarTabelaClientes();
     limparCampos();
-};
+}
 
 function atualizarTabelaClientes() {
     const corpoTabelaClientes = document.getElementById("corpoTabelaClientes");
@@ -71,7 +70,7 @@ function atualizarTabelaClientes() {
    clientes.forEach((cliente, index) => {
         const row = corpoTabelaClientes.insertRow();
         row.insertCell(0).textContent = cliente.nome;
-        row.insertCell(1).textContent = cliente.sobrenome;
+        row.insertCell(1).textContent = cliente.cidade;
         row.insertCell(2).textContent = cliente.nascimento;
         row.insertCell(3).textContent = cliente.cidade;
         row.insertCell(4).textContent = cliente.cep;
@@ -185,6 +184,7 @@ function obterIndiceClienteSelecionado() {
     }
     return -1;
 }
+
 function excluirCliente(index) {
     const clientes = JSON.parse(localStorage.getItem("IncluirClientes")) || [];
 
@@ -209,15 +209,15 @@ function limparCampos() {
     document.getElementById("tipoCliente").value = "";
 }
 
-const corpoTabelaClientes = document.getElementById("corpoTabelaClientes");
+// const corpoTabelaClientes = document.getElementById("corpoTabelaClientes");
 
-corpoTabelaClientes.addEventListener("click", (event) => {
-    const row = event.target.parentNode;
-    if (row.tagName === "TR") {
-        const index = Array.from(row.parentNode.children).indexOf(row);
-        preencherFormulario(index);
-    }
-});
+// corpoTabelaClientes.addEventListener("click", (event) => {
+//     const row = event.target.parentNode;
+//     if (row.tagName === "TR") {
+//         const index = Array.from(row.parentNode.children).indexOf(row);
+//         preencherFormulario(index);
+//     }
+// });
 
 window.onload = function () {
     atualizarTabelaClientes();
