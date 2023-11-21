@@ -35,6 +35,11 @@ input,select {
     border-radius: 3px;
 }
 
+a{
+    color: #fff;
+    text-decoration: none;
+}
+
 select {
     height: 40px;
     width: 99%;

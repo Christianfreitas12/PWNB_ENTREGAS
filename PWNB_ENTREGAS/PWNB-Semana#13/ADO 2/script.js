@@ -30,13 +30,11 @@ function buscarEndereco() {
     } else {
         alert("CEP inválido. O formato deve ser nnnnn-ccc.");
     }
-};
+}
 
 
-const clientes = [];
 function incluirCliente() {
     const { nome, sobrenome, nascimento, cidade, cep, uf, endereco, numero, tipoCliente } = resgatarDados();
-
     if (!nome || !sobrenome || !nascimento || !cidade || !cep || !uf || !endereco || !numero || !tipoCliente) {
         alert("Todos os campos devem ser preenchidos");
         return;
@@ -54,13 +52,48 @@ function incluirCliente() {
         tipoCliente
     };
 
+    const clientes = JSON.parse(localStorage.getItem("IncluirClientes")) || [];
+
     clientes.push(cliente);
+    localStorage.setItem("IncluirClientes", JSON.stringify(clientes));
+
+
     atualizarTabelaClientes();
     limparCampos();
+};
+
+function atualizarTabelaClientes() {
+    const corpoTabelaClientes = document.getElementById("corpoTabelaClientes");
+    corpoTabelaClientes.innerHTML = "";
+
+    const clientes = JSON.parse(localStorage.getItem("IncluirClientes")) || [];
+
+   clientes.forEach((cliente, index) => {
+        const row = corpoTabelaClientes.insertRow();
+        row.insertCell(0).textContent = cliente.nome;
+        row.insertCell(1).textContent = cliente.sobrenome;
+        row.insertCell(2).textContent = cliente.nascimento;
+        row.insertCell(3).textContent = cliente.cidade;
+        row.insertCell(4).textContent = cliente.cep;
+        row.insertCell(5).textContent = cliente.uf;
+        row.insertCell(6).textContent = cliente.endereco;
+        row.insertCell(7).textContent = cliente.numero;
+        row.insertCell(8).textContent = cliente.tipoCliente;
+
+        const alterarButton = document.createElement("button");
+        alterarButton.textContent = "Alterar";
+        alterarButton.onclick = () => alterarCliente();
+        row.insertCell(9).appendChild(alterarButton);
+
+        const excluirButton = document.createElement("button");
+        excluirButton.textContent = "Excluir";
+        excluirButton.onclick = () => excluirCliente(index); 
+        row.insertCell(10).appendChild(excluirButton);
+    });
 }
 
 function alterarCliente() {
-    const { nome, sobrenome, nascimento, cidade, cep, uf, endereco, numero, tipoCliente} = resgatarDados();
+    const { nome, sobrenome, nascimento, cidade, cep, uf, endereco, numero, tipoCliente } = resgatarDados();
 
     if (!nome || !sobrenome || !nascimento || !cidade || !cep || !uf || !endereco || !numero || !tipoCliente) {
         alert("Todos os campos devem ser preenchidos");
@@ -69,7 +102,10 @@ function alterarCliente() {
 
     const index = obterIndiceClienteSelecionado();
     if (index !== -1) {
+        const clientes = JSON.parse(localStorage.getItem("IncluirClientes")) || [];
         const cliente = clientes[index];
+
+        // Atualiza os dados do cliente com os novos valores
         cliente.nome = nome;
         cliente.sobrenome = sobrenome;
         cliente.nascimento = nascimento;
@@ -79,10 +115,18 @@ function alterarCliente() {
         cliente.endereco = endereco;
         cliente.numero = numero;
         cliente.tipoCliente = tipoCliente;
+
+        // Atualiza o localStorage com os dados modificados
+        localStorage.setItem("IncluirClientes", JSON.stringify(clientes));
+
+        // Atualiza a tabela de clientes e limpa os campos
         atualizarTabelaClientes();
         limparCampos();
+
+        window.location.href = 'index.html';
     }
 }
+
 
 function resgatarDados() {
     const nome = document.getElementById("nome").value;
@@ -98,36 +142,19 @@ function resgatarDados() {
     return { nome, sobrenome, nascimento, cidade, cep, uf, endereco, numero, tipoCliente };
 }
 
-function atualizarTabelaClientes() {
-    const corpoTabelaClientes = document.getElementById("corpoTabelaClientes");
-    corpoTabelaClientes.innerHTML = "";
 
-    clientes.forEach((cliente, index) => {
-        const row = corpoTabelaClientes.insertRow();
-        row.insertCell(0).textContent = cliente.nome;
-        row.insertCell(1).textContent = cliente.sobrenome;
-        row.insertCell(2).textContent = cliente.nascimento;
-        row.insertCell(3).textContent = cliente.cidade;
-        row.insertCell(4).textContent = cliente.cep;
-        row.insertCell(5).textContent = cliente.uf;
-        row.insertCell(6).textContent = cliente.endereco;
-        row.insertCell(7).textContent = cliente.numero;
-        row.insertCell(8).textContent = cliente.tipoCliente;
-
-        const alterarButton = document.createElement("button");
-        alterarButton.textContent = "Alterar";
-        alterarButton.onclick = () => preencherFormulario(index);
-        row.insertCell(9).appendChild(alterarButton);
-
-        const excluirButton = document.createElement("button");
-        excluirButton.textContent = "Excluir";
-        excluirButton.onclick = () => excluirCliente(index);
-        row.insertCell(10).appendChild(excluirButton);
-    });
-}
 
 function preencherFormulario(index) {
+    const clientes = JSON.parse(localStorage.getItem("clientes"));
+
+    if (!clientes || index < 0 || index >= clientes.length) {
+        console.error("Erro: Dados inválidos ou índice fora dos limites.");
+        return;
+    }
+
     const cliente = clientes[index];
+
+    // Atualiza os valores no formulário
     document.getElementById("nome").value = cliente.nome;
     document.getElementById("sobrenome").value = cliente.sobrenome;
     document.getElementById("nascimento").value = cliente.nascimento;
@@ -140,9 +167,11 @@ function preencherFormulario(index) {
 
     const corpoTabelaClientes = document.getElementById("corpoTabelaClientes");
     const rows = corpoTabelaClientes.getElementsByTagName("tr");
+
     for (let i = 0; i < rows.length; i++) {
         rows[i].classList.remove("selecionado");
     }
+
     rows[index].classList.add("selecionado");
 }
 
@@ -156,10 +185,13 @@ function obterIndiceClienteSelecionado() {
     }
     return -1;
 }
-
 function excluirCliente(index) {
+    const clientes = JSON.parse(localStorage.getItem("IncluirClientes")) || [];
+
     if (index >= 0 && index < clientes.length) {
         clientes.splice(index, 1);
+        localStorage.setItem("IncluirClientes", JSON.stringify(clientes));
+
         atualizarTabelaClientes();
         limparCampos();
     }
@@ -186,3 +218,7 @@ corpoTabelaClientes.addEventListener("click", (event) => {
         preencherFormulario(index);
     }
 });
+
+window.onload = function () {
+    atualizarTabelaClientes();
+};

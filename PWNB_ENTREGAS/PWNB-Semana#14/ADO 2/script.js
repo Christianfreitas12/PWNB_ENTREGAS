@@ -1,6 +1,6 @@
 
 
-const cepRegex = /^\d{5}-\d{3}$/;
+
 
 function buscarEndereco() {
     const cepInput = document.getElementById("cep");
@@ -8,10 +8,11 @@ function buscarEndereco() {
     const cidadeInput = document.getElementById("cidade");
     const ufInput = document.getElementById("uf");
 
+    const cepRegex = /^\d{5}-\d{3}$/;
+
     if (cepRegex.test(cepInput.value)) {
         const cep = cepInput.value.replace('-', '');
 
-        //Logica para buscar as informações do CEP Na API via Json e preencher os campos automaticamnete
         fetch(`https://viacep.com.br/ws/${cep}/json/`)
             .then(response => response.json())
             .then(data => {
@@ -26,10 +27,21 @@ function buscarEndereco() {
             .catch(error => {
                 console.error("Ocorreu um erro na solicitação: " + error);
             });
-
     } else {
         alert("CEP inválido. O formato deve ser nnnnn-ccc.");
     }
+}
+
+function formatarCEP() {
+    var cepInput = document.getElementById('cep');
+    var cepValue = cepInput.value;
+    cepValue = cepValue.replace(/\D/g, '');
+
+    if (cepValue.length > 5) {
+      cepValue = cepValue.substring(0, 5) + '-' + cepValue.substring(5);
+    }
+
+    cepInput.value = cepValue;
 }
 
 
@@ -41,25 +53,17 @@ function incluirCliente() {
     }
 
     const cliente = {
-        nome,
-        sobrenome,
-        nascimento,
-        cidade,
-        cep,
-        uf,
-        endereco,
-        numero,
-        tipoCliente
+        nome, sobrenome, nascimento, cidade, cep, uf, endereco, numero, tipoCliente
     };
 
     const clientes = JSON.parse(localStorage.getItem("IncluirClientes")) || [];
-
     clientes.push(cliente);
     localStorage.setItem("IncluirClientes", JSON.stringify(clientes));
 
-    //atualizarTabelaClientes();
     limparCampos();
+    atualizarTabelaClientes();
 }
+  
 
 function atualizarTabelaClientes() {
     const corpoTabelaClientes = document.getElementById("corpoTabelaClientes");
@@ -91,41 +95,6 @@ function atualizarTabelaClientes() {
     });
 }
 
-function alterarCliente() {
-    const { nome, sobrenome, nascimento, cidade, cep, uf, endereco, numero, tipoCliente } = resgatarDados();
-
-    if (!nome || !sobrenome || !nascimento || !cidade || !cep || !uf || !endereco || !numero || !tipoCliente) {
-        alert("Todos os campos devem ser preenchidos");
-        return;
-    }
-
-    const index = obterIndiceClienteSelecionado();
-    if (index !== -1) {
-        const clientes = JSON.parse(localStorage.getItem("IncluirClientes")) || [];
-        const cliente = clientes[index];
-
-        // Atualiza os dados do cliente com os novos valores
-        cliente.nome = nome;
-        cliente.sobrenome = sobrenome;
-        cliente.nascimento = nascimento;
-        cliente.cidade = cidade;
-        cliente.cep = cep;
-        cliente.uf = uf;
-        cliente.endereco = endereco;
-        cliente.numero = numero;
-        cliente.tipoCliente = tipoCliente;
-
-        // Atualiza o localStorage com os dados modificados
-        localStorage.setItem("IncluirClientes", JSON.stringify(clientes));
-
-        // Atualiza a tabela de clientes e limpa os campos
-        atualizarTabelaClientes();
-        limparCampos();
-
-        window.location.href = 'index.html';
-    }
-}
-
 
 function resgatarDados() {
     const nome = document.getElementById("nome").value;
@@ -141,38 +110,6 @@ function resgatarDados() {
     return { nome, sobrenome, nascimento, cidade, cep, uf, endereco, numero, tipoCliente };
 }
 
-
-
-function preencherFormulario(index) {
-    const clientes = JSON.parse(localStorage.getItem("clientes"));
-
-    if (!clientes || index < 0 || index >= clientes.length) {
-        console.error("Erro: Dados inválidos ou índice fora dos limites.");
-        return;
-    }
-
-    const cliente = clientes[index];
-
-    // Atualiza os valores no formulário
-    document.getElementById("nome").value = cliente.nome;
-    document.getElementById("sobrenome").value = cliente.sobrenome;
-    document.getElementById("nascimento").value = cliente.nascimento;
-    document.getElementById("cidade").value = cliente.cidade;
-    document.getElementById("cep").value = cliente.cep;
-    document.getElementById("uf").value = cliente.uf;
-    document.getElementById("endereco").value = cliente.endereco;
-    document.getElementById("numero").value = cliente.numero;
-    document.getElementById("tipoCliente").value = cliente.tipoCliente;
-
-    const corpoTabelaClientes = document.getElementById("corpoTabelaClientes");
-    const rows = corpoTabelaClientes.getElementsByTagName("tr");
-
-    for (let i = 0; i < rows.length; i++) {
-        rows[i].classList.remove("selecionado");
-    }
-
-    rows[index].classList.add("selecionado");
-}
 
 function obterIndiceClienteSelecionado() {
     const corpoTabelaClientes = document.getElementById("corpoTabelaClientes");
@@ -198,26 +135,13 @@ function excluirCliente(index) {
 }
 
 function limparCampos() {
-    document.getElementById("nome").value = "";
-    document.getElementById("sobrenome").value = "";
-    document.getElementById("nascimento").value = "";
-    document.getElementById("cidade").value = "";
-    document.getElementById("cep").value = "";
-    document.getElementById("uf").value = "";
-    document.getElementById("endereco").value = "";
-    document.getElementById("numero").value = "";
-    document.getElementById("tipoCliente").value = "";
+    const campos = ["nome", "sobrenome", "nascimento", "cidade", "cep", "uf", "endereco", "numero", "tipoCliente"];
+
+    campos.forEach(campo => {
+        document.getElementById(campo).value = "";
+    });
 }
 
-// const corpoTabelaClientes = document.getElementById("corpoTabelaClientes");
-
-// corpoTabelaClientes.addEventListener("click", (event) => {
-//     const row = event.target.parentNode;
-//     if (row.tagName === "TR") {
-//         const index = Array.from(row.parentNode.children).indexOf(row);
-//         preencherFormulario(index);
-//     }
-// });
 
 window.onload = function () {
     atualizarTabelaClientes();

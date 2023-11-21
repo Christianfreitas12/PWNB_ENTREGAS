@@ -25,7 +25,7 @@
         <input type="text" name="cidade" id="cidade" readonly>
 
         <label for="cep">CEP</label>
-        <input type="text" name="cep" id="cep" placeholder="99999-999" required onblur="buscarEndereco()" >
+        <input type="text" name="cep" id="cep" placeholder="99999-999" required onblur="buscarEndereco()" oninput="formatarCEP();" maxlength="9" >
 
         <label for="uf">UF</label>
         <input type="text" name="uf" id="uf" readonly>
