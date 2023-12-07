@@ -1,0 +1,38 @@
+body {
+    font-family: Poppins-Regular;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #202020;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+}
+
+
+#calendario{
+    width: 40%;
+}
+
+.container {
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center; 
+    margin-top: 4em;
+}
+
+.fc .fc-button-primary:disabled {
+    display: none;
+}
+
+.fc .fc-scroller-liquid-absolute {
+   overflow: none;
+}
+
+.fc .fc-button-group{
+    display: none;
+}

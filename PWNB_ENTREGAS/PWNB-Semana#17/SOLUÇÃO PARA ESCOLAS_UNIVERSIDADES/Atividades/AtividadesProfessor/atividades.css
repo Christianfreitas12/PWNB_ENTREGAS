@@ -1,0 +1,99 @@
+body {
+    font-family: Poppins-Regular;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #202020;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+}
+
+
+.container {
+    max-width: 60%;
+    margin: 50px auto;
+    background-color: #fff;
+    padding: 30px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-bottom: 5px;
+}
+
+input, button {
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: #9e9c9c54;
+    border-radius: 10px;
+}
+
+.buttonAdi  {
+    cursor: pointer;
+    background-color: #FF0077;
+    color: #fff;
+    border: none;
+}
+
+.buttonAdi:hover {
+    background-color: #ff0077b9;
+}
+
+.buttonList{
+    cursor: pointer;
+    background-color: #ff0000;
+    color: #fff;
+    border: none;
+}
+
+.buttonList:hover {
+    background-color: #ff0000b9;
+}
+
+#listaAtividades {
+    margin-top: 20px;
+}
+
+button {
+    padding: 5px 10px;
+    margin: 2px;
+    border: none;
+    border-radius: 3px;
+
+    background-color: #2196F3;
+    color: #fff;
+}
+
+button:hover {
+    background-color: #2195f39c;
+}
+
+
+
+table {
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(23, 10, 73, 0.1);
+    border: none;
+    width: 100%;
+}
+
+table th, table td {
+    padding: 10px;
+    text-align: center;
+}
+
+table th {
+    background-color: #d7030397;
+    color: #fff;
+  
+}

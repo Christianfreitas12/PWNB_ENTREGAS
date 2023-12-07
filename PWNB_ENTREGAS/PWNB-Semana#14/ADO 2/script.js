@@ -109,7 +109,7 @@ function resgatarDados() {
     
     return { nome, sobrenome, nascimento, cidade, cep, uf, endereco, numero, tipoCliente };
 }
-
+ 
 
 function obterIndiceClienteSelecionado() {
     const corpoTabelaClientes = document.getElementById("corpoTabelaClientes");
