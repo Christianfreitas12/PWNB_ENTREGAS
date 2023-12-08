@@ -8,14 +8,6 @@ function adicionarAtividade() {
         alert('Campo descricão ou data entrega vazios..')
     }
     else {
-        var dataAtual = new Date();
-        var dataSelecionada = new Date(dataEntrega);
-
-        if (dataSelecionada <= dataAtual || dataSelecionada.getFullYear() !== dataAtual.getFullYear()) {
-            alert('Data entrega incorreta verifique.');
-            return;
-        }
-
         var atividade = {
             descricao: descricao,
             dataEntrega: dataEntrega,

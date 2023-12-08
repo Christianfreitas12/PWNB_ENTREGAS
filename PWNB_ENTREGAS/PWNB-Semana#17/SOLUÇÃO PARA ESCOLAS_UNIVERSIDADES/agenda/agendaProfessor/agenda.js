@@ -5,15 +5,6 @@ function adicionarAgenda() {
     if (descricao === "" && data === "") {
         alert('Campo descrição ou data vazios..');
     } else {
-
-        var dataAtual = new Date();
-        var dataSelecionada = new Date(data);
-
-        if (dataSelecionada <= dataAtual || dataSelecionada.getFullYear() !== dataAtual.getFullYear()) {
-            alert('Data entrega incorreta verifique.');
-            return;
-        }
-        
         var novaAgenda = {
             title: descricao,
             start: data

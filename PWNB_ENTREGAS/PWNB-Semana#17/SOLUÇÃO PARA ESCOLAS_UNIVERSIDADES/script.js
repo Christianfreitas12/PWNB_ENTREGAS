@@ -1,9 +1,7 @@
 
 document.addEventListener('DOMContentLoaded', function () {
-    // Seleciona o formulário e adiciona um ouvinte para o evento de envio
     var form = document.querySelector('.login100-form');
     form.addEventListener('submit', function (event) {
-        // Impede o envio padrão do formulário
         event.preventDefault();
 
     
